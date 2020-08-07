@@ -1,0 +1,6 @@
+<%# TODO: move validation to location_user not to user object %>
+<% if @user.errors.present? %>
+  $('#user-details-holder').replaceWith('<%=j render 'form' %>');
+<% else %>
+  window.location.assign('<%= user_path(@user) %>');
+<% end %>

@@ -1,0 +1,23 @@
+<%
+  page_title "Users"
+  breadcrumb "Dashboard": root_path, "Users": nil
+%>
+
+
+
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <%=  link_to new_user_path, class: "btn  pull-left" do %>
+          <i class="fa fa-plus" aria-hidden="true"></i> Add User
+        <% end %>
+        <%= @datatable.render_html search_users_path(format: :json) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

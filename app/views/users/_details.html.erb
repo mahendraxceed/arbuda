@@ -1,0 +1,33 @@
+<div id="user-details-holder">
+
+    <div class="edit-buttons">
+      <%= button_to edit_user_path(@user), remote: true,  params: { replace_with: 'details'}, class: 'btn  btn-outline-primary ', "data-disable-with": "<i class='fa fa-spinner fa-spin'></i> Edit", method: :get do %>
+        <i class="fas fa-edit" aria-hidden="true"></i> Edit
+      <% end %>
+    </div>
+ <div class="row">
+   <div class="col-md-6">
+     <dl class="dl-horizontal">
+       <dt>Name</dt>
+       <dd><%= @user.name.titleize %></dd>
+       <dt>Mobile</dt>
+       <dd><%= @user.mobile %></dd>
+       <dt>Email</dt>
+       <dd><%= @user.email %></dd>
+     </dl>
+   </div>
+   <div class="col-md-6">
+     <dl class="dl-horizontal">
+       <dt>Total Assigend Complain</dt>
+       <dd><%= 10 %></dd>
+       <dt>Total Open Complain</dt>
+       <dd><%= 3 %></dd>
+       <dt>Total Resolved Complain</dt>
+       <dd><%= 7 %></dd>
+     </dl>
+   </div>
+ </div>
+
+
+</div>
+

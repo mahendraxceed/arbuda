@@ -1,0 +1,6 @@
+<%# TODO: move validation to location_user not to user object %>
+<% if @complain.errors.present? %>
+  $('#complain-details-holder').replaceWith('<%=j render 'form' %>');
+<% else %>
+  window.location.assign('<%= complain_path(@complain) %>');
+<% end %>

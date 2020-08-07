@@ -1,0 +1,101 @@
+<%
+  page_title "Ticket :#{@complain.ticketid}"
+  breadcrumb "Dashboard": root_path, "Tickets": complains_path, "Show": nil
+%>
+
+
+<% @complain.status_events.select{ |e| e != Constant.TICKET_EVENTS[:EDIT] && can?(e, @complain) }.each do |event| %>
+  <div class="modal fade" tabindex="-1" id="<%= event %>-location-ticket-modal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <%= bootstrap_form_for @complain do |f| %>
+          <div class="modal-header">
+
+            <h4 class="modal-title">Change status to: <b><%= event.titleize %></b></h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <%= f.hidden_field :ticketid %>
+
+            <% if Constant.TICKET_EVENTS.values_at(:ASSIGN, :REASSIGN).include? event %>
+              <%= f.select :assigned_to_id, options_for_select(User.all.map {|user| [ user.name, user.id ]}), { include_blank: true }, required: true, 'data-select2-initialize': true, 'data-placeholder': 'Select User' %>
+              <script>
+                  initializeSelect2();
+              </script>
+
+            <% end %>
+
+            <%= f.hidden_field :status_event, value: event %>
+            <%= f.text_area :comment %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+            <%= f.submit Constant.TICKET_EVENT_LABELS[Constant.TICKET_EVENTS.key event], class: 'btn btn-primary pull-right' %>
+          </div>
+        <% end %>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="col-md-3">
+
+    <!-- Profile Image -->
+    <div class="card card-primary card-outline">
+      <div class="card-header">
+        <h3 class="card-title">Status:  <b><%= @complain.status.titleize %></b></h3>
+      </div>
+      <div class="card-body box-profile">
+        <% @complain.status_events.select{ |e| e != Constant.TICKET_EVENTS[:EDIT] && can?(e, @complain) }.each do |event| %>
+          <%= button_tag Constant.TICKET_EVENT_LABELS[Constant.TICKET_EVENTS.key event], class: "btn btn-block btn-primary", "data-toggle": "modal", "data-target": "##{ event }-location-ticket-modal" %>
+        <% end %>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+
+  </div>
+
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-header p-2">
+        <ul class="nav nav-pills">
+          <li class="nav-item"><a class="nav-link active" href="#detail" data-toggle="tab">Details</a></li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <div class="tab-content">
+          <div class="tab-pane active" id="detail">
+            <%= render 'details' %>
+          </div>
+        </div>
+        <!-- /.tab-content -->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header p-2">
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a id="w3s" class="nav-link" href="<%= status_transitions_complain_path @complain %>" data-target="#audit-trail" data-toggle="tabajax">Comments</a></li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <div class="tab-content">
+      <div class="tab-pane" id="audit-trail">
+      </div>
+    </div>
+    <!-- /.tab-content -->
+  </div>
+</div>
+
+
+<script>
+    $(document).ready(function() { $('#w3s').trigger('click') });
+</script>

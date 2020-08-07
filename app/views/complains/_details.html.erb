@@ -1,0 +1,65 @@
+<div id="complain-details-holder">
+  <div class="edit-buttons">
+    <%= button_to edit_complain_path(@complain), remote: true,  params: { replace_with: 'details'}, class: 'btn  btn-outline-primary ', "data-disable-with": "<i class='fa fa-spinner fa-spin'></i> Edit", method: :get do %>
+      <i class="fas fa-edit" aria-hidden="true"></i> Edit
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <p>
+        <strong>Ticket no: &nbsp;</strong>
+        <%= @complain.ticketid %>
+      </p>
+
+      <p>
+        <strong>Customer: &nbsp;</strong>
+        <% if  @complain.customer.present? %>
+        <%= link_to @complain.customer.name, customer_path(@complain.customer) %>
+      <% else %>
+        <%= @complain.customer_name %>
+      <% end %>
+      </p>
+      <p>
+        <strong>Person Called: &nbsp;</strong>
+        <%= @complain.person_called %>
+      </p>
+      <p>
+        <strong>Assigned To: &nbsp;</strong>
+        <% if  @complain.assigned_to.present? %>
+        <%= link_to @complain.assigned_to.name, user_path(@complain.assigned_to) %>
+       <% else %>
+        Not Assigned
+      <% end %>
+      </p>
+      <p>
+        <strong>Priority: &nbsp;</strong>
+        <%= @complain.priority[1..-1].titleize %>
+      </p>
+    </div>
+    <div class="col-md-6">
+      <p>
+        <strong>Created At: &nbsp;</strong>
+        <%= @complain.created_at.to_formatted_s(:short) %>
+      </p>
+      <p>
+        <strong>Due By: &nbsp;</strong>
+        <%= @complain.due_by.to_formatted_s(:short) %>
+      </p>
+      <p>
+        <strong>Status: &nbsp;</strong>
+        <%= @complain.status.titleize %>
+      </p>
+      <p>
+        <strong>Subject: &nbsp;</strong>
+        <%= @complain.subject %>
+      </p><p>
+      <strong>Description: &nbsp;</strong>
+      <%= @complain.description %>
+    </p>
+
+
+    </div>
+  </div>
+
+</div>

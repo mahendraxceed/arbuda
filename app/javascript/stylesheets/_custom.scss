@@ -1,0 +1,34 @@
+h1 {
+  color: red;
+}
+
+.move-up {
+  // move up to align with pagination
+  margin-top: -50px;
+  position: relative;
+  // do not overlap pagination buttons
+  width: 30%;
+}
+
+.media-left,
+.media > .pull-left {
+  padding-right: 10px;
+}
+
+.pull-left {
+  float: left !important;
+}
+
+#flash-messages-section{
+  position: absolute;
+  z-index: 9999;
+  width: 100%;
+}
+
+
+.edit-buttons {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  z-index: 1;
+}

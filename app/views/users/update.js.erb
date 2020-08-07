@@ -1,0 +1,9 @@
+<% if @user.errors.present? %>
+  <% if params[:replace_with] == "details" %>
+  $('#user-details-holder').replaceWith("<%=j render 'form' %>");
+  <% elsif params[:replace_with] == "change_password" %>
+  $('#user-details-holder').replaceWith("<%=j render 'change_password' %>");
+  <% end %>
+<% else %>
+$('#user-details-holder').replaceWith("<%=j render 'details' %>");
+<% end %>

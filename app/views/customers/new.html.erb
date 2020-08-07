@@ -1,0 +1,20 @@
+<%
+  page_title "Customer Create"
+  breadcrumb "Dashboard": root_path, "Customers": nil
+%>
+
+<div class="row">
+  <div class="col-md-7">
+    <div class="card card-info">
+      <div class="card-header">
+        <h3 class="card-title">Create New Customer</h3>
+      </div>
+
+      <%= render 'form', customer: @customer %>
+
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,47 @@
+<div id="customer-details-holder">
+
+  <div class="edit-buttons">
+    <%= button_to edit_customer_path(@customer), remote: true,  params: { replace_with: 'details'}, class: 'btn  btn-outline-primary ', "data-disable-with": "<i class='fa fa-spinner fa-spin'></i> Edit", method: :get do %>
+      <i class="fas fa-edit" aria-hidden="true"></i> Edit
+    <% end %>
+  </div>
+ <div class="row">
+   <div class="col-sm-6">
+     <p>
+       <strong>Company Name:</strong>
+       <%= @customer.name %>
+     </p>
+
+     <p>
+       <strong>Mobile:</strong>
+       <%= @customer.mobile %>
+     </p>
+
+     <p>
+       <strong>Address:</strong>
+       <%= @customer.address %>
+     </p>
+   </div>
+   <div class="col-sm-6">
+     <p>
+       <strong>Total Comaplain: &nbsp;</strong>
+       <%= link_to @customer.complains.count, complains_path(ComplainsDatatable.param_set("customers.name", @customer.name)) %>
+     </p>
+
+     <p>
+       <strong>Open Complain: &nbsp;</strong>
+       <%= link_to @customer.complains.active.count, complains_path(ComplainsDatatable.param_set("customers.name", @customer.name).deep_merge(ComplainsDatatable.param_set("complains.status", "open"))) %>
+     </p>
+
+     <p>
+       <strong>Resolved Complain: &nbsp;</strong>
+       <%= link_to @customer.complains.resolve.count, complains_path(ComplainsDatatable.param_set("customers.name", @customer.name).deep_merge(ComplainsDatatable.param_set("complains.status", "resolved"))) %>
+     </p>
+     <p>
+       <strong>Closed Complain: &nbsp;</strong>
+       <%=link_to @customer.complains.close.count, complains_path(ComplainsDatatable.param_set("customers.name", @customer.name).deep_merge(ComplainsDatatable.param_set("complains.status", "closed"))) %>
+     </p>
+   </div>
+ </div>
+
+</div>

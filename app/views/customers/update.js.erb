@@ -1,0 +1,7 @@
+<% if @customer.errors.present? %>
+  <% if params[:replace_with] == "details" %>
+    $('#customer-details-holder').replaceWith("<%=j render 'form' %>");
+  <% end %>
+<% else %>
+$('#customer-details-holder').replaceWith("<%=j render 'details' %>");
+<% end %>

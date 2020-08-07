@@ -1,0 +1,49 @@
+<div class="timeline">
+  <% status_transitions.group_by { |status_transition| status_transition.created_at.strftime("%Y-%m-%d") }.map do |day, status_transitions_in_day| %>
+    <!-- timeline time label -->
+
+    <div class="time-label">
+                        <span class="bg-blue">
+                          <%= Date.parse day %>
+                        </span>
+    </div>
+    <!-- /.timeline-label -->
+    <% status_transitions_in_day.each do |status_transition| %>
+      <!-- timeline item -->
+      <div>
+        <i class="fas fa-envelope bg-primary"></i>
+        <div class="timeline-item">
+          <span class="time"><i class="far fa-clock"></i> <%= status_transition.created_at.strftime("%I:%M %p") %></span>
+
+          <h3 class="timeline-header border-0"><%=raw status_transition.change_description %></h3>
+
+          <div class="timeline-body">
+            <% if status_transition.class.const_defined? :AUDIT_TRAIL_OTHER_COLUMNS %>
+              <% status_transition.class.const_get(:AUDIT_TRAIL_OTHER_COLUMNS).each do |other_column| %>
+                <b><%= other_column[:name] %></b> <%= send other_column[:cast], status_transition.send(other_column[:value]) %>
+              <% end %>
+            <% end %>
+            <% if status_transition.try(:total_amount) %>
+              <b>Total Amount:</b> <%= humanized_money_with_symbol status_transition.total_amount %>
+            <% end %>
+            <% if status_transition.try(:amount) %>
+              <b>Amount:</b> <%= humanized_money_with_symbol status_transition.amount %>
+            <% end %>
+            <% if status_transition.try(:comment) %>
+              <% if status_transition.comment.present? %>
+                <b>Comment:</b> <%= status_transition.comment.to_s.html_safe %>
+              <% end %>
+            <% end %>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- END timeline item -->
+    <% end %>
+  <% end %>
+  <!-- END timeline item -->
+  <div>
+    <i class="far fa-clock bg-gray"></i>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<%
+  page_title "User Create"
+  breadcrumb "Dashboard": root_path, "Users": nil
+%>
+
+<div class="row">
+  <div class="col-md-9">
+       <div class="card card-info">
+         <div class="card-header">
+           <h3 class="card-title">Create New User</h3>
+         </div>
+
+           <%= render 'form', user: @user %>
+
+       </div>
+  </div>
+</div>
+

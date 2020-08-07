@@ -1,0 +1,279 @@
+<% if current_user.admin %>
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box">
+        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-ticket-alt"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Today Complains</span>
+          <span class="info-box-number">
+                  <%=link_to Complain.register_today.count, complains_path(non_table_filter: :registered_today) %>
+
+                </span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-envelope-open"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Open Complains</span>
+          <span class="info-box-number"><%= link_to Complain.open.count, complains_path(ComplainsDatatable.param_set("complains.status", "open")) %></span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+
+    <!-- fix for small devices only -->
+    <div class="clearfix hidden-md-up"></div>
+
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-spinner"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">In Process Complains</span>
+          <span class="info-box-number"><%= link_to Complain.in_process.count, complains_path(ComplainsDatatable.param_set("complains.status", "in_process")) %></span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-envelope-open"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Pending Complains</span>
+          <span class="info-box-number"><%= link_to Complain.in_process.count, complains_path(ComplainsDatatable.param_set("complains.status", "pending")) %></span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box">
+        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-ticket-alt"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Total Complains</span>
+          <span class="info-box-number">
+                  <%= link_to Complain.all.count, complains_path %>
+
+                </span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-down"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Over Due Complains</span>
+          <span class="info-box-number"><%=link_to Complain.overdue.count, complains_path(non_table_filter: :overdue) %></span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+
+    <!-- fix for small devices only -->
+    <div class="clearfix hidden-md-up"></div>
+
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-thumbs-up"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Resolved Complains</span>
+          <span class="info-box-number"><%=link_to Complain.resolve.count, complains_path(ComplainsDatatable.param_set("complains.status", "resolved")) %></span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-envelope"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">closed Complains</span>
+          <span class="info-box-number"><%= link_to Complain.close.count, complains_path(ComplainsDatatable.param_set("complains.status", "closed")) %></span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-header border-transparent">
+          <h3 class="card-title">Engineer Complains</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table m-0">
+              <thead>
+              <tr>
+                <th>Engineer Name</th>
+                <th>Total</th>
+                <th>In Process</th>
+                <th>pending </th>
+                <th>Resolved</th>
+                <th>closed</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% User.all.each do |user| %>
+                <tr>
+                  <td><%=link_to user.name, user %></a></td>
+                  <td><%=link_to user.complains.count, complains_path(ComplainsDatatable.param_set("users.name", user.name)) %></td>
+                  <td><%= link_to user.complains.in_process.count, complains_path(ComplainsDatatable.param_set("users.name", user.name).deep_merge(ComplainsDatatable.param_set("complains.status", "in_process"))) %></td>
+                  <td>
+                    <%= link_to user.complains.keep_pending.count, complains_path(ComplainsDatatable.param_set("users.name", user.name).deep_merge(ComplainsDatatable.param_set("complains.status", "pending"))) %>
+                  </td>
+                  <td>
+                    <%= link_to user.complains.resolve.count, complains_path(ComplainsDatatable.param_set("users.name", user.name).deep_merge(ComplainsDatatable.param_set("complains.status", "resolved"))) %>
+                  </td>
+                  <td>
+                    <%= link_to user.complains.close.count, complains_path(ComplainsDatatable.param_set("users.name", user.name).deep_merge(ComplainsDatatable.param_set("complains.status", "closed"))) %>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.table-responsive -->
+        </div>
+        <!-- /.card-body -->
+        <!-- /.card-footer -->
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-header border-transparent">
+          <h3 class="card-title">Category Complains</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table m-0">
+              <thead>
+              <tr>
+                <th>Category Name</th>
+                <th>Total Complain</th>
+
+              </tr>
+              </thead>
+              <tbody>
+              <% Constant.CATEGORY_TYPES.each do |category, v| %>
+                <tr>
+                  <td><%= category %></a></td>
+                  <td><%=link_to Complain.where(:category => v).count, complains_path(ComplainsDatatable.param_set("complains.category", v)) %></td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.table-responsive -->
+        </div>
+        <!-- /.card-body -->
+        <!-- /.card-footer -->
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box">
+        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-ticket-alt"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Total Complains</span>
+          <span class="info-box-number">
+                  <%=link_to current_user.complains.count, complains_path(ComplainsDatatable.param_set("users.name", current_user.name)) %>
+
+                </span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-spinner"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">In Process Complains</span>
+          <span class="info-box-number"><%= link_to current_user.complains.in_process.count, complains_path(ComplainsDatatable.param_set("users.name", current_user.name).deep_merge(ComplainsDatatable.param_set("complains.status", "in_process"))) %></span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <div class="clearfix hidden-md-up"></div>
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-envelope-open"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Pending Complains</span>
+          <span class="info-box-number"><%= link_to current_user.complains.keep_pending.count, complains_path(ComplainsDatatable.param_set("users.name", current_user.name).deep_merge(ComplainsDatatable.param_set("complains.status", "pending"))) %></span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-envelope-open"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Open Complains</span>
+          <span class="info-box-number"><%= link_to Complain.open.count, complains_path(ComplainsDatatable.param_set("complains.status", "open")) %></span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+
+  </div>
+<% end %>
+
