@@ -50,5 +50,5 @@ test:
 production:
   <<: *default
   database: arbuda_production
-  username: arbuda
-  password: <%= ENV['ARBUDA_DATABASE_PASSWORD'] %>
+  username: root
+  password: mahi
