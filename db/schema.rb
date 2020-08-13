@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2020_07_29_053712) do
 
-  create_table "complain_status_transitions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "complain_status_transitions", force: :cascade do |t|
     t.bigint "complain_id"
     t.string "namespace", limit: 50
     t.string "event", limit: 50
@@ -24,7 +27,7 @@ ActiveRecord::Schema.define(version: 2020_07_29_053712) do
     t.index ["complain_id"], name: "index_complain_status_transitions_on_complain_id"
   end
 
-  create_table "complains", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "complains", force: :cascade do |t|
     t.bigint "customer_id"
     t.integer "ticketid", null: false
     t.string "person_called", limit: 100
@@ -37,8 +40,8 @@ ActiveRecord::Schema.define(version: 2020_07_29_053712) do
     t.string "status", limit: 50, null: false
     t.text "comment"
     t.string "updated_from_ip", limit: 50, null: false
-    t.bigint "created_by_id", null: false, unsigned: true
-    t.bigint "updated_by_id", null: false, unsigned: true
+    t.bigint "created_by_id", null: false
+    t.bigint "updated_by_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["assigned_to_id"], name: "index_complains_on_assigned_to_id"
@@ -46,7 +49,7 @@ ActiveRecord::Schema.define(version: 2020_07_29_053712) do
     t.index ["customer_id"], name: "index_complains_on_customer_id"
   end
 
-  create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "customers", force: :cascade do |t|
     t.string "name"
     t.string "mobile"
     t.string "address"
@@ -54,7 +57,7 @@ ActiveRecord::Schema.define(version: 2020_07_29_053712) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "name"
     t.string "mobile"
