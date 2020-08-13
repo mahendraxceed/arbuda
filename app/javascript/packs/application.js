@@ -26,7 +26,7 @@ window.$ = window.jQuery = jQuery;
 import "../stylesheets/application"
 
 require("admin-lte");
-import "admin-lte/plugins/jquery-ui/jquery-ui.min"
+require("jquery-ui");
 
 import "admin-lte/plugins/bootstrap/js/bootstrap.bundle.min"
 
