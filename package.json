@@ -1,6 +1,10 @@
 {
   "name": "arbuda",
   "version": "1.0.0",
+  "scripts": {
+    "webpack:deploy": "webpack --config=webpack/webpack.config.js -p",
+    "heroku-postbuild": "npm run webpack:deploy"
+  },
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
