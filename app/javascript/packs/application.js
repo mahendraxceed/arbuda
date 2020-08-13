@@ -28,10 +28,10 @@ import "../stylesheets/application"
 require("admin-lte");
 require("jquery-ui");
 
-import "admin-lte/plugins/bootstrap/js/bootstrap.bundle.min"
-
-import "admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min"
-import "admin-lte/plugins/select2/js/select2"
+// import "admin-lte/plugins/bootstrap/js/bootstrap.bundle.min"
+//
+// import "admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min"
+// import "admin-lte/plugins/select2/js/select2"
 
 
 
