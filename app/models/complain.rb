@@ -97,7 +97,7 @@ class Complain < ApplicationRecord
       if [Constant.TICKET_EVENTS[:ASSIGN], Constant.TICKET_EVENTS[:REASSIGN]].include? transition.event
 
         Rails.logger.info "test #{complain}"
-        SendSmsJob.perform_later complain
+        SendSmsJob.perform_now complain
       end
     end
 
