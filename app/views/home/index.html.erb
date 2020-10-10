@@ -52,7 +52,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Pending Complains</span>
-          <span class="info-box-number"><%= link_to Complain.in_process.count, complains_path(ComplainsDatatable.param_set("complains.status", "pending")) %></span>
+          <span class="info-box-number"><%= link_to Complain.keep_pending.count, complains_path(ComplainsDatatable.param_set("complains.status", "pending")) %></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -83,7 +83,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Over Due Complains</span>
-          <span class="info-box-number"><%=link_to Complain.overdue.count, complains_path(non_table_filter: :overdue) %></span>
+          <span class="info-box-number"><%=link_to Complain.active.overdue.count, complains_path(non_table_filter: :overdue) %></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -122,7 +122,7 @@
     <!-- /.col -->
   </div>
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-7">
       <div class="card">
         <div class="card-header border-transparent">
           <h3 class="card-title">Engineer Complains</h3>
@@ -176,7 +176,7 @@
         <!-- /.card-footer -->
       </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-5">
       <div class="card">
         <div class="card-header border-transparent">
           <h3 class="card-title">Category Complains</h3>
@@ -197,7 +197,9 @@
               <thead>
               <tr>
                 <th>Category Name</th>
-                <th>Total Complain</th>
+                <th>Progress</th>
+                <th>Close</th>
+                <th>Total</th>
 
               </tr>
               </thead>
@@ -205,6 +207,8 @@
               <% Constant.CATEGORY_TYPES.each do |category, v| %>
                 <tr>
                   <td><%= category %></a></td>
+                  <td><%=link_to Complain.where(:category => v).in_process.count, complains_path(ComplainsDatatable.param_set("complains.category", v)) %></td>
+                  <td><%=link_to Complain.where(:category => v).close.count, complains_path(ComplainsDatatable.param_set("complains.category", v)) %></td>
                   <td><%=link_to Complain.where(:category => v).count, complains_path(ComplainsDatatable.param_set("complains.category", v)) %></td>
                 </tr>
               <% end %>
