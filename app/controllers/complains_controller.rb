@@ -47,12 +47,27 @@ class ComplainsController < ApplicationController
   # PATCH/PUT /complains/1.json
   def update
     respond_to do |format|
-      if @complain.update(complain_params)
-        format.html { redirect_to @complain, notice: 'Complain was successfully updated.' }
-        format.json { render :show, status: :ok, location: @complain }
+      if @complain.update complain_params
+        notice = if params[:complain][:status_event] != Constant.TICKET_EVENTS[:EDIT]
+                   "Ticket #{@complain.status} successfully."
+                 else
+                   'Ticket updated successfully.'
+                 end
+        if @complain.errors.present?
+          notice += @complain.errors.full_messages.to_sentence
+          format.html { redirect_to @complain, alert: notice }
+          format.js { flash.now[:alert] = notice }
+          format.json { render json: { message: notice, data: @complain.for_api } }
+        else
+          format.html { redirect_to @complain, notice: notice }
+          format.js { flash.now[:notice] = notice }
+          format.json { render json: { message: notice, data: @complain.for_api } }
+        end
       else
-        format.html { render :edit }
-        format.json { render json: @complain.errors, status: :unprocessable_entity }
+        alert = @complain.errors.full_messages.first
+        format.html { redirect_to @complain, alert: alert }
+        format.js { flash.now[:alert] = "Can't update. #{alert}" }
+        format.json { render json: { error_message: alert, error_status: :unprocessable_entity }, status: :unprocessable_entity }
       end
     end
   end

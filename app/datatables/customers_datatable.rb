@@ -4,6 +4,7 @@ class CustomersDatatable < TrkDatatables::ActiveRecord
       'customers.id': {},
       'customers.name': {},
       'customers.mobile': {},
+      'customers.alt_mobile': {},
       'customers.address': {},
     }
   end
@@ -18,8 +19,9 @@ class CustomersDatatable < TrkDatatables::ActiveRecord
     filtered.map do |customer|
       [
         @view.link_to(customer.id, customer),
-        customer.name,
+        @view.link_to(customer.name, customer),
         customer.mobile,
+        customer.alt_mobile,
         customer.address,
       ]
     end

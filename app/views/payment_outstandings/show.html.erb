@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @payment_outstanding.customer_id %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @payment_outstanding.amount %>
+</p>
+
+<p>
+  <strong>Due date:</strong>
+  <%= @payment_outstanding.due_date %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @payment_outstanding.status %>
+</p>
+
+<%= link_to 'Edit', edit_payment_outstanding_path(@payment_outstanding) %> |
+<%= link_to 'Back', payment_outstandings_path %>

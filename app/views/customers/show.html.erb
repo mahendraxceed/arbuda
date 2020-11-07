@@ -47,5 +47,42 @@
     </div>
   </div>
 </div>
+<% if @customer.complains.present? %>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <table class='table table-bordered table-striped ' data-datatable='true' >
+          <thead>
+          <tr>
+            <th>Ticket ID</th>
+            <th>Person</th>
+            <th>Assigned To</th>
+            <th>Subject</th>
+            <th>Created At</th>
+            <th>Status</th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <% @customer.complains.each do |complain| %>
+            <tr>
+              <td><%= link_to complain.ticketid, complain_path(complain) %></td>
+              <td><%= complain.person_called %></td>
+              <td><%= complain.assigned_to.name %></td>
+              <td><%= complain.subject %></td>
+              <td><%= complain.created_at.strftime("%d-%m-%Y %I:%M %p") %></td>
+              <td><span class='badge badge-<%= convert_status_to_class(complain.status) %>'><%= complain.status %></span></td>
+
+            </tr>
+          <% end %>
+
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
 
 

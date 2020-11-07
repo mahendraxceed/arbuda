@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Payment Outstandings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Customer</th>
+      <th>Amount</th>
+      <th>Due date</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @payment_outstandings.each do |payment_outstanding| %>
+      <tr>
+        <td><%= payment_outstanding.customer_id %></td>
+        <td><%= payment_outstanding.amount %></td>
+        <td><%= payment_outstanding.due_date %></td>
+        <td><%= payment_outstanding.status %></td>
+        <td><%= link_to 'Show', payment_outstanding %></td>
+        <td><%= link_to 'Edit', edit_payment_outstanding_path(payment_outstanding) %></td>
+        <td><%= link_to 'Destroy', payment_outstanding, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Payment Outstanding', new_payment_outstanding_path %>

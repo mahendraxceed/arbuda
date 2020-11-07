@@ -29,6 +29,10 @@
 
             <%= f.hidden_field :status_event, value: event %>
             <%= f.text_area :comment %>
+            <% if Constant.TICKET_EVENTS.values_at(:RESOLVE).include? event %>
+              <%= f.text_field :challan_no %>
+              <%= f.text_field :receiver_name  %>
+            <% end %>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>

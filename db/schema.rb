@@ -10,12 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_29_053712) do
+ActiveRecord::Schema.define(version: 2020_11_07_050057) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "complain_status_transitions", force: :cascade do |t|
+  create_table "complain_status_transitions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "complain_id"
     t.string "namespace", limit: 50
     t.string "event", limit: 50
@@ -23,11 +20,13 @@ ActiveRecord::Schema.define(version: 2020_07_29_053712) do
     t.string "to", limit: 50, null: false
     t.string "change_description", null: false
     t.text "comment"
+    t.string "receiver_name"
+    t.string "challan_no"
     t.datetime "created_at", null: false
     t.index ["complain_id"], name: "index_complain_status_transitions_on_complain_id"
   end
 
-  create_table "complains", force: :cascade do |t|
+  create_table "complains", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "customer_id"
     t.integer "ticketid", null: false
     t.string "person_called", limit: 100
@@ -40,8 +39,8 @@ ActiveRecord::Schema.define(version: 2020_07_29_053712) do
     t.string "status", limit: 50, null: false
     t.text "comment"
     t.string "updated_from_ip", limit: 50, null: false
-    t.bigint "created_by_id", null: false
-    t.bigint "updated_by_id", null: false
+    t.bigint "created_by_id", null: false, unsigned: true
+    t.bigint "updated_by_id", null: false, unsigned: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["assigned_to_id"], name: "index_complains_on_assigned_to_id"
@@ -49,15 +48,28 @@ ActiveRecord::Schema.define(version: 2020_07_29_053712) do
     t.index ["customer_id"], name: "index_complains_on_customer_id"
   end
 
-  create_table "customers", force: :cascade do |t|
+  create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.string "mobile"
     t.string "address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "alt_mobile"
+    t.integer "due_amount"
+    t.date "due_date"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "payment_outstandings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.integer "amount"
+    t.date "due_date"
+    t.string "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_payment_outstandings_on_customer_id"
+  end
+
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "name"
     t.string "mobile"
@@ -75,4 +87,5 @@ ActiveRecord::Schema.define(version: 2020_07_29_053712) do
   add_foreign_key "complain_status_transitions", "complains"
   add_foreign_key "complains", "customers"
   add_foreign_key "complains", "users", column: "assigned_to_id"
+  add_foreign_key "payment_outstandings", "customers"
 end

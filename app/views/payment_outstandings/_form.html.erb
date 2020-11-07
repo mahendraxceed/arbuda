@@ -1,0 +1,37 @@
+<%= form_with(model: payment_outstanding, local: true) do |form| %>
+  <% if payment_outstanding.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(payment_outstanding.errors.count, "error") %> prohibited this payment_outstanding from being saved:</h2>
+
+      <ul>
+        <% payment_outstanding.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :customer_id %>
+    <%= form.text_field :customer_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :amount %>
+    <%= form.number_field :amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :due_date %>
+    <%= form.date_select :due_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

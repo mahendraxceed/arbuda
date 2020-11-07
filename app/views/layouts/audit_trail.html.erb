@@ -33,6 +33,12 @@
               <% if status_transition.comment.present? %>
                 <b>Comment:</b> <%= status_transition.comment.to_s.html_safe %>
               <% end %>
+              <% if status_transition.challan_no.present? %>
+                <br><b>Challan No:</b> <%= status_transition.challan_no.to_s.html_safe %>
+              <% end %>
+              <% if status_transition.receiver_name.present? %>
+                <br><b>Receiver Name:</b> <%= status_transition.receiver_name.to_s.html_safe %>
+              <% end %>
             <% end %>
           </div>
 

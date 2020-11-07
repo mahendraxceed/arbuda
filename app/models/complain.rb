@@ -3,7 +3,7 @@ class Complain < ApplicationRecord
 
   FIELDS = %i[
     customer_id person_called assigned_to_id subject description priority category
-    due_by status_event comment
+    due_by status_event comment challan_no receiver_name
   ]
 
   FIELD_OPTIONS = {
@@ -26,11 +26,19 @@ class Complain < ApplicationRecord
   validates_presence_of :status, {message: "Status cannot be blank"}
   validates_presence_of :priority , :category
 
+
   validate :due_by_is_valid_and_not_in_past, on: :create
+  validate :uniqueness_of_challan_no
+
+  def uniqueness_of_challan_no
+    return true unless challan_no.present?
+    existing = ComplainStatusTransition.find_by challan_no: challan_no
+    errors.add(:challan_no, " Is  present, Please Try Diffrent No") if existing.present?
+  end
 
   before_validation { self.ticketid = rand.to_s[2..10] }
 
-  attr_accessor :change_description, :comment
+  attr_accessor :change_description, :comment, :challan_no, :receiver_name
 
   scope :active, -> {
     where status: Constant.TICKET_ACTIVE_STATUSES
@@ -68,7 +76,7 @@ class Complain < ApplicationRecord
 
   state_machine :status, initial: Constant.TICKET_STATUSES[:OPEN] do
 
-    audit_trail context: [:change_description, :comment]
+    audit_trail context: [:change_description, :comment, :challan_no, :receiver_name]
 
     before_transition on: any do |complain, transition|
       case transition.event
@@ -95,8 +103,6 @@ class Complain < ApplicationRecord
 
     after_transition any => [Constant.TICKET_STATUSES[:IN_PROCESS], Constant.TICKET_STATUSES[:REASSIGNED]] do |complain, transition|
       if [Constant.TICKET_EVENTS[:ASSIGN], Constant.TICKET_EVENTS[:REASSIGN]].include? transition.event
-
-        Rails.logger.info "test #{complain}"
         SendSmsJob.perform_now complain
       end
     end
