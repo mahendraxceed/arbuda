@@ -1,24 +1,16 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Arbuda Computer Complain Management System 
 
-Things you may want to cover:
+#Dashborad
+![img.png](img.png)
 
-* Ruby version
+# Employee list
+![img_1.png](img_1.png)
 
-* System dependencies
+#complain list
 
-* Configuration
+![img_2.png](img_2.png)
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+#complain detail
+![img_3.png](img_3.png)
