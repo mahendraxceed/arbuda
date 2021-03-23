@@ -6,8 +6,7 @@ ruby '2.5.7'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
 # Use mysql as the database for Active Record
-#gem 'mysql2', '>= 0.4.4'
-gem 'pg', '>= 0.18', '< 2.0'
+gem 'mysql2', '>= 0.4.4'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
@@ -56,6 +55,6 @@ gem 'state_machines'
 gem 'state_machines-audit_trail'
 gem 'state_machines-activerecord'
 
-gem 'trk_datatables'
+gem 'trk_datatables', '=0.2.10'
 
 gem 'coffee-rails'

@@ -1,17 +1,18 @@
 class ComplainsDatatable < TrkDatatables::ActiveRecord
   def columns
     {
-      'complains.id': {},
+
       'customers.name': {title: 'Customer'},
       'complains.ticketid': {},
       'complains.person_called': {title: 'person'},
       'users.name': {title: 'Assigned To', select_options: User.all},
       'complains.subject': {},
+      'complains.created_at': { },
 
       'complains.priority': {},
 
       'complains.category': {},
-      'complains.status': { },
+      'complains.status': {  },
 
 
     }
@@ -65,13 +66,13 @@ class ComplainsDatatable < TrkDatatables::ActiveRecord
       category = complain.category[2..-1].capitalize
       status_label = "<span class='badge badge-#{ @view.convert_status_to_class(complain.status) }'>#{ complain.status.titleize }</span>".html_safe
       [
-        @view.link_to(complain.id, complain),
+
         @view.link_to(complain.customer.name, complain.customer),
         @view.link_to(complain.ticketid, complain),
         complain.person_called,
         assigned,
         complain.subject,
-
+        complain.created_at.to_date.to_s,
         priority,
 
         category,
